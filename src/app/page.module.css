@@ -1,168 +1,73 @@
-.page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+/* src/app/page.module.css */
 
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-  font-family: var(--font-geist-sans);
+.mainLayout {
+  /* 
+    Этот контейнер больше не использует display: flex для расположения Sidebar и contentArea.
+    Он может иметь общие стили для страницы, например, фон, если он отличается от body.
+    Если фон body уже #111 (как в globals.css), то background-color здесь может быть не нужен.
+  */
+  /* background-color: #111; */ /* Если нужен специфичный фон для этой обертки */
 }
 
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
+.contentArea {
+  /* 
+    КЛЮЧЕВОЙ СТИЛЬ: Отступ слева, равный ширине вашего фиксированного сайдбара.
+    Если ваш Sidebar.module.css использует .sidebar { width: 260px; },
+    то здесь должно быть margin-left: 260px;
+  */
+  margin-left: 260px; /* ЗАМЕНИТЕ 260px НА ФАКТИЧЕСКУЮ ШИРИНУ ВАШЕГО САЙДБАРА */
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
-}
-
-.main {
+  /* 
+    Эти стили позволяют HeroSection (если он имеет flex-grow: 1) 
+    растянуться по высоте и обеспечивают, что .contentArea 
+    занимает как минимум всю высоту экрана.
+  */
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
+  min-height: 100vh;
+
+  /* 
+    Опционально: если вы хотите, чтобы сам контент внутри .contentArea 
+    (не HeroSection, который может быть на всю ширину) был ограничен по ширине и центрирован.
+    Это не повлияет на HeroSection, если он имеет свои стили ширины.
+  */
+  /* 
+  max-width: 1400px; // Например, максимальная ширина контента
+  margin-right: auto; // Для центрирования, если max-width используется
+  padding-left: 20px; // Боковые отступы внутри контентной области
+  padding-right: 20px;
+  */
+
+  /* 
+    Если HeroSection должен быть на всю доступную ширину (от сайдбара до правого края экрана),
+    то max-width и боковые padding здесь не нужны или должны быть применены
+    к дочерним элементам внутри .contentArea, а не к самому .contentArea.
+  */
 }
 
-.main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  list-style-position: inside;
+/* 
+  Пример стилей для дополнительных секций, если они у вас есть в page.tsx
+  (раскомментируйте и адаптируйте, если используете)
+*/
+/*
+.popularProducts {
+  padding: 40px 20px; // Отступы для секции
+  background-color: #181818; // Пример фона для секции
 }
 
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
+.popularProducts h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #fff;
 }
 
-.main code {
-  font-family: inherit;
-  background: var(--gray-alpha-100);
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-weight: 600;
+.newsFeed {
+  padding: 40px 20px;
 }
 
-.ctas {
-  display: flex;
-  gap: 16px;
+.newsFeed h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #fff;
 }
-
-.ctas a {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: none;
-  border: 1px solid transparent;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
-}
-
-a.primary {
-  background: var(--foreground);
-  color: var(--background);
-  gap: 8px;
-}
-
-a.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 158px;
-}
-
-.footer {
-  grid-row-start: 3;
-  display: flex;
-  gap: 24px;
-}
-
-.footer a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.footer img {
-  flex-shrink: 0;
-}
-
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
-
-  .footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-}
-
-@media (max-width: 600px) {
-  .page {
-    padding: 32px;
-    padding-bottom: 80px;
-  }
-
-  .main {
-    align-items: center;
-  }
-
-  .main ol {
-    text-align: center;
-  }
-
-  .ctas {
-    flex-direction: column;
-  }
-
-  .ctas a {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 16px;
-  }
-
-  a.secondary {
-    min-width: auto;
-  }
-
-  .footer {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
-}
+*/
