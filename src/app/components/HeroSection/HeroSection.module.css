@@ -1,0 +1,255 @@
+/* src/components/HeroSection/HeroSection.module.css */
+.hero {
+  flex-grow: 1;
+  position: relative; /* <--- ВАЖНО! .infoBox будет позиционироваться относительно этого */
+  overflow: hidden;   /* Может скрывать .infoBox, если он выходит за пределы. Можно временно убрать для отладки. */
+  color: white;
+  border: 3px dashed magenta !important;
+  min-height: 500px; /* Убедись, что у него есть высота */
+}
+
+
+/* src/components/HeroSection/HeroSection.module.css */
+.backgroundLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* Занимает 100% ширины родительского .hero */
+  height: 100%; /* Занимает 100% высоты родительского .hero */
+  
+  /* --- КЛЮЧЕВОЕ ИЗМЕНЕНИЕ --- */
+  background-size: 100% 100%; /* Растягивает изображение по ширине и высоте контейнера, искажая пропорции */
+  /* --- КОНЕЦ КЛЮЧЕВОГО ИЗМЕНЕНИЯ --- */
+  
+  background-repeat: no-repeat; /* Чтобы изображение не повторялось, если оно меньше контейнера (хотя с 100% 100% это неактуально) */
+  background-position: center center; /* Это свойство теперь менее важно, так как изображение будет полностью растянуто */
+                                      /* Но его можно оставить, оно не помешает. */
+  z-index: 1; 
+  /* transition для opacity управляется инлайн-стилем из JSX */
+}
+
+.contentWrapper { /* Если .infoBox ВНУТРИ .contentWrapper */
+  position: relative; /* <--- ВАЖНО! Если .infoBox здесь, он будет позиционироваться относительно этого. */
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Убедитесь, что z-index .infoBox (20) выше этого */
+}
+
+.topLeftText {
+  position: absolute;
+  top: 60px;  /* Может потребоваться корректировка, если текст упирается */
+  left: 60px; /* Может потребоваться корректировка */
+  z-index: 10;
+}
+.topLeftText h1 {
+  font-size: clamp(2.2rem, 5vw, 4.5rem); /* Слегка уменьшил верхний предел для примера */
+  font-weight: 900;
+  color: #fff;
+  margin: 0;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+.topLeftText h1 span {
+  color: #6a00ff;
+}
+.topLeftText h2 {
+  font-size: clamp(1.3rem, 3.5vw, 2.5rem); /* Слегка уменьшил верхний предел */
+  font-weight: 900;
+  color: #fff;
+  margin: 10px 0 0 0;
+  text-transform: uppercase;
+  display: flex;
+  align-items: baseline;
+  letter-spacing: -1px;
+}
+.smallText {
+  font-size: 0.4em;
+  font-weight: 700;
+  margin-left: 15px;
+  letter-spacing: 1px;
+  padding-bottom: 5px;
+  border-bottom: 2px dotted #777;
+}
+
+.productShowcase {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+.productShowcase > div > div {
+    pointer-events: auto;
+}
+.wifiIcon {
+    position: absolute;
+    top: 28%; /* Эти процентные значения для позиционирования, возможно, тоже нужно будет скорректировать */
+    left: 35%; /* после изменения размеров и ширины родителя */
+    width: 60px;  /* Пример уменьшения */
+    height: 60px; /* Пример уменьшения */
+    z-index: 6;
+    opacity: 0.8;
+}
+
+/* --- ПРИМЕРНЫЕ ИЗМЕНЕНИЯ РАЗМЕРОВ ПРОДУКТОВ --- */
+.keyboard {
+  position: absolute;
+  top: 50%;    /* Может потребоваться корректировка top/left */
+  left: 45%;   /* после изменения размеров */
+  transform: translate(-50%, -50%) rotate(-5deg);
+  width: 420px;   /* Пример: было 550px */
+  height: auto;   /* Позволит сохранить пропорции, если используется img или next/image */
+                  /* Если это div с background-image, нужно задать явную высоту пропорционально новой ширине */
+  z-index: 8;
+}
+.mouse {
+  position: absolute;
+  top: 70%;
+  left: 52%;
+  transform: translate(-50%, -50%) rotate(5deg);
+  width: 140px;   /* Пример: было 180px */
+  height: auto;
+  z-index: 9;
+}
+.headset {
+  position: absolute;
+  top: 40%;
+  left: 70%;   /* Это значение может стать слишком большим, наушники могут уйти за правый край. Попробуйте уменьшить (например, 65%) */
+  transform: translate(-50%, -50%) rotate(10deg);
+  width: 260px;   /* Пример: было 330px */
+  height: auto;
+  z-index: 7;
+}
+/* --- КОНЕЦ ПРИМЕРНЫХ ИЗМЕНЕНИЙ --- */
+
+/* src/components/HeroSection/HeroSection.module.css */
+/* src/components/HeroSection/HeroSection.module.css */
+.infoBox {
+   position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 280px;
+  background-color: rgba(20, 20, 20, 0.88);
+  color: white;
+  padding: 20px 25px;
+  border-radius: 4px;
+  z-index: 20 !important; /* Можно будет попробовать убрать !important позже */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  display: flex !important; /* Можно будет попробовать убрать !important позже */
+  flex-direction: column !important; /* Можно будет попробовать убрать !important позже */
+  /* border: 2px solid yellow; */ /* Закомментируй или удали отладочную рамку, когда будешь доволен */
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.pageNumber {
+  color: #777;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 3px 5px;
+  cursor: pointer;
+  transition: color 0.2s, opacity 0.3s;
+  position: relative;
+  text-align: center;
+  flex-grow: 1;
+}
+.pageNumber.disabledPage {
+  color: #444;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.pageNumber:hover:not(.disabledPage) {
+  color: #ccc;
+}
+
+.pageNumber.activePage {
+  color: #6a00ff;
+  font-weight: 700;
+}
+
+.progressBar {
+  position: absolute;
+  bottom: -5px;
+  left: 10%;
+  width: 0%;
+  height: 3px;
+  background-color: #6a00ff;
+  animation-name: progressBarAnimation;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  border-radius: 2px;
+}
+
+@keyframes progressBarAnimation {
+  from { width: 0%; }
+  to { width: 80%; }
+}
+
+.slideTitle {
+  font-size: 1.1rem; /* Пример: было 1.2rem */
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  animation: fadeInSlideUpTitle 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+@keyframes fadeInSlideUpTitle {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.actionButton {
+  background-color: #6a00ff;
+  color: white;
+  border: none;
+  padding: 12px 0;
+  font-size: 1.5rem; /* Пример: было 1.6rem */
+  line-height: 1;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+.actionButton:hover {
+  background-color: #5500cc; /* Темнее при наведении, подберите свой цвет */
+}
+
+/* Медиа-запросы также потребуют корректировки, так как "базовая" ширина изменилась */
+@media (max-width: 1200px) { /* Эта точка может теперь соответствовать ~940px видимой области контента (1200 - 260) */
+  .keyboard { width: 380px; /* Подбирайте значения */ }
+  .headset { width: 240px; left: 68%; /* Подбирайте значения */ }
+  .mouse { width: 130px; top: 72%; /* Подбирайте значения */ }
+}
+
+@media (max-width: 992px) { /* Эта точка может теперь соответствовать ~732px видимой области контента (992 - 260) */
+  .topLeftText { top: 40px; left: 40px; }
+  .infoBox { bottom: 30px; right: 30px; width: 260px; }
+  /* Если на этом этапе сайдбар скрывается, то .productShowcase можно снова показать,
+     но тогда нужно будет переопределить margin-left для .contentArea и .footer */
+  /* .productShowcase { display: none; } */ /* Пока оставим, но возможно, логика изменится */
+}
+
+@media (max-width: 768px) {
+  /* Если на этом разрешении сайдбар скрывается (и margin-left для .contentArea становится 0),
+     то размеры продуктов могут вернуться к более крупным значениям или потребуются новые.
+     Логика медиа-запросов усложняется, если ширина сайдбара меняется.
+  */
+  .topLeftText h1 { font-size: 1.8rem; }
+  .topLeftText h2 { font-size: 1.1rem; }
+  .infoBox {
+    width: calc(100% - 40px);
+    left: 20px;
+    right: 20px;
+  }
+  .productShowcase { display: none; } /* Часто на мобильных такие сложные композиции скрывают */
+}
