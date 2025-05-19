@@ -1,0 +1,245 @@
+/* src/components/Sidebar/Sidebar.module.css */
+.sidebar {
+
+  width: 260px; /* <--- Эта ширина */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background-color: #0D0D0D; /* Темный фон сайдбара */
+  color: #A8A8A8; /* Основной цвет текста в сайдбаре */
+  display: flex;
+  flex-direction: column;
+
+  /* --- КЛЮЧЕВЫЕ ИЗМЕНЕНИЯ ДЛЯ ФИКСАЦИИ --- */
+  position: fixed;    /* Фиксированное позиционирование */
+  top: 0;             /* Прижимаем к верху */
+  left: 0;            /* Прижимаем к левому краю */
+  height: 100vh;      /* Занимает всю высоту видимой области экрана */
+  z-index: 1000;      /* Чтобы быть поверх другого контента, если необходимо */
+  /* --- КОНЕЦ КЛЮЧЕВЫХ ИЗМЕНЕНИЙ --- */
+
+  font-family: 'Arial', sans-serif; /* Или ваш кастомный шрифт */
+  overflow: hidden; /* Скрываем общий скроллбар сайдбара, если .mainNav будет скроллиться */
+}
+
+.logoContainer {
+  text-align: center;
+  padding: 25px 15px 20px 15px;
+  flex-shrink: 0; /* Чтобы логотип не сжимался, если контента много */
+}
+
+.logoLink {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.logoLink::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #6a00ff; /* Ваш фирменный цвет для анимации */
+  z-index: 0;
+  transition: width 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+  border-radius: inherit;
+}
+
+.logoLink:hover::before {
+  width: 100%;
+}
+
+.logoImageWrapper {
+  position: relative;
+  z-index: 1;
+  display: block;
+  transition: filter 0.3s ease-in-out;
+}
+
+.logoLink:hover .logoImageWrapper img {
+  filter: brightness(0) invert(1); /* Логотип становится белым при наведении */
+}
+
+.logoImageWrapper img {
+  /* object-fit: contain !important; <-- Старайтесь избегать !important, если возможно */
+  object-fit: contain;
+  display: block;
+}
+
+.mainNav {
+  flex-grow: 1;      /* Занимает все доступное пространство по высоте */
+  overflow-y: auto;  /* Позволяет прокручивать только эту область, если пунктов меню много */
+  min-height: 0;     /* Необходимо для корректной работы flex-grow и overflow-y */
+}
+
+.mainNav ul,
+.otherLinksNav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navLink {
+  display: block;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.navLink::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #6a00ff; /* Ваш фирменный цвет */
+  transition: width 0.3s ease-in-out;
+  z-index: 0;
+}
+
+.navLink:hover::before {
+  width: 100%;
+}
+
+.navLinkContent {
+  display: flex;
+  align-items: center;
+  padding: 10px 30px;
+  position: relative;
+  z-index: 1;
+  color: #9a9a9a;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease-in-out;
+}
+
+.navLink:hover .navLinkContent {
+  color: #ffffff;
+}
+
+.navIcon {
+  margin-right: 18px;
+  filter: invert(30%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(90%);
+  transition: filter 0.2s ease-in-out;
+}
+
+.navLink:hover .navIcon {
+  filter: invert(10%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(110%) contrast(100%);
+}
+
+.sidebarFooter {
+  flex-shrink: 0; /* Чтобы футер сайдбара не сжимался */
+  padding-bottom: 10px;
+}
+
+.otherLinksNav {
+  padding: 20px 0 15px 0;
+  border-top: 1px solid #1A1A1A;
+}
+
+.otherLink {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.otherLink::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #6a00ff; /* Ваш фирменный цвет */
+  transition: width 0.3s ease-in-out;
+  z-index: 0;
+}
+
+.otherLink:hover::before {
+  width: 100%;
+}
+
+.otherLinkContent {
+  display: block;
+  position: relative;
+  z-index: 1;
+  color: #a3a3a3;
+  padding: 7px 30px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+.otherLinkContent::before {
+  content: '•';
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #4A4A4A;
+  font-size: 1.2em;
+}
+
+.otherLink:hover .otherLinkContent {
+  color: #FFFFFF;
+}
+
+.languageSwitcher {
+  padding: 15px 30px 0 30px;
+  border-top: 1px solid #1A1A1A;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.langButton, .langButtonActive {
+  background: none;
+  border: 1px solid #444444;
+  color: #888888;
+  padding: 6px 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  text-transform: uppercase;
+}
+
+.langButton:hover {
+  background-color: #282828;
+  color: #CCCCCC;
+  border-color: #555555;
+}
+
+.langButtonActive {
+  color: #FFFFFF;
+  border-color: #777777;
+  background-color: #252525;
+}
+
+/* Стили для кастомного скроллбара внутри .mainNav */
+.mainNav::-webkit-scrollbar {
+  width: 5px;
+}
+.mainNav::-webkit-scrollbar-track {
+  background: #0D0D0D; /* Фон трека скроллбара, совпадает с фоном сайдбара */
+}
+.mainNav::-webkit-scrollbar-thumb {
+  background: #333333; /* Цвет ползунка скроллбара */
+  border-radius: 3px;
+}
+.mainNav::-webkit-scrollbar-thumb:hover {
+  background: #555555; /* Цвет ползунка при наведении */
+}
